@@ -1,0 +1,10 @@
+# local backups of the previous live plugin, made by tools/deploy.sh
+backups/
+
+# tool dependencies and scratch output
+node_modules/
+out/
+tmp/
+
+.DS_Store
+*.log

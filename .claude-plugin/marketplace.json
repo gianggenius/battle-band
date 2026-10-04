@@ -1,0 +1,17 @@
+{
+  "name": "battle-band",
+  "description": "A pixel-art battle band for the Claude desktop app",
+  "owner": { "name": "GiGi", "url": "https://github.com/gianggenius" },
+  "plugins": [
+    {
+      "name": "battle-band",
+      "source": "./plugin",
+      "description": "An endless pixel-art adventure in the band above the prompt, with the 5-hour and weekly usage limits drawn as two roads. Desktop app only.",
+      "version": "2.0.0",
+      "author": { "name": "GiGi", "url": "https://github.com/gianggenius" },
+      "homepage": "https://github.com/gianggenius/battle-band",
+      "license": "MIT",
+      "keywords": ["pixel-art", "desktop", "band", "usage", "adventure"]
+    }
+  ]
+}

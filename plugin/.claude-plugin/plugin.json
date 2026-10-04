@@ -1,0 +1,11 @@
+{
+  "name": "battle-band",
+  "version": "2.0.0",
+  "description": "An endless pixel-art adventure in the band above the prompt: while Claude works a knight fights through a dungeon, a plateau, the ice and a volcano (three monsters, then a boss, then on to the next place); at rest he sits by a campfire. A strip on top draws the 5-hour and weekly usage limits as two roads to a tower and a castle. Desktop only; nothing else is added.",
+  "author": { "name": "GiGi", "url": "https://github.com/gianggenius" },
+  "homepage": "https://github.com/gianggenius/battle-band",
+  "repository": "https://github.com/gianggenius/battle-band",
+  "license": "MIT",
+  "keywords": ["pixel-art", "desktop", "band", "usage", "adventure"],
+  "types": "./types/index.d.ts"
+}

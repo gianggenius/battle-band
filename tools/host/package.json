@@ -1,0 +1,10 @@
+{
+  "name": "battle-band-host-harness",
+  "private": true,
+  "description": "Replays the Claude desktop app's drawing of an Svg element (DOMPurify scrub, sandboxed iframe) in headless Chrome",
+  "dependencies": {
+    "dompurify": "3.4.13",
+    "pngjs": "^7.0.0",
+    "puppeteer-core": "^25.12.0"
+  }
+}
