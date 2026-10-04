@@ -2,10 +2,14 @@
 """python3 tools/media/compose.py <stills-dir> <out-dir>
 
 Stacks the stills made by render.js (see make-media.sh) into the pictures the README shows:
+  worlds.png          the boss of each place, with the place and the boss named   (README front page)
+  elite-pair.png      the Yeti King in lap 1 and in lap 2                         (README front page)
+  usage.png           the usage strip in three states, each with a note           (README front page)
+  camp.png            two camps                                                   (README front page)
   biome-<place>.png   a fight, the boss's warning and the boss's end, one under the other
   camps.png           the four camps
   usage-states.png    the usage strip in six states, each with a note
-  elite.png           lap 1 and lap 2 (elite monsters) of the same moment
+  elite.png           three bosses in lap 1 and lap 2 (elite monsters)
 Needs ImageMagick (`magick`). FONT=<ttf> picks the font of the notes."""
 import os
 import subprocess
@@ -76,9 +80,19 @@ STATES = [
 ]
 with_notes([(p(f'usage-{s}-14.png'), 8 * 11, n) for s, n in STATES], os.path.join(out, 'usage-states.png'))
 
+# the bosses as the art names them (Vua Xương, Troll đá, Vua Yeti, Quỷ lửa)
+BOSS = {'dungeon': 'Bone King', 'plateau': 'Rock Troll', 'ice': 'Yeti King', 'volcano': 'Fire Demon'}
+PLACE = {'dungeon': 'Dungeon', 'plateau': 'Plateau', 'ice': 'Frozen lands', 'volcano': 'Volcano'}
+
 PAIRS = [('ice', '35'), ('volcano', '35'), ('dungeon', '35')]
 rows = []
 for place, t in PAIRS:
-    rows += [(p(f'elite-{place}-t0-{t}.png'), None, ['lap 1', place]), (p(f'elite-{place}-t1-{t}.png'), None, ['lap 2: elite', place])]
+    rows += [(p(f'elite-{place}-t0-{t}.png'), None, ['lap 1', BOSS[place]]), (p(f'elite-{place}-t1-{t}.png'), None, ['lap 2: elite', BOSS[place]])]
 with_notes(rows, os.path.join(out, 'elite.png'), gutter=240)
+
+# the README front page: one picture each
+with_notes([(p(f'{b}-35.png'), None, [PLACE[b], BOSS[b]]) for b in FIGHT], os.path.join(out, 'worlds.png'), gutter=260)
+with_notes(rows[:2], os.path.join(out, 'elite-pair.png'), gutter=240)
+with_notes([(p(f'usage-{s}-14.png'), 8 * 11, n) for s, n in STATES if s in ('mid', 'amber', 'danger')], os.path.join(out, 'usage.png'))
+stack([p('camp-dungeon-2_5.png'), p('camp-volcano-2_5.png')], os.path.join(out, 'camp.png'))
 print('composed into', out)

@@ -1,6 +1,7 @@
 #!/bin/bash
 # Rebuilds the pictures and the tour video in docs/media from the plugin's own code and art:
-#   biome-*.png camps.png usage-states.png elite.png   stacked stills
+#   worlds.png elite-pair.png usage.png camp.png        the README front page
+#   biome-*.png camps.png usage-states.png elite.png   the same, in full, for the README's 'More pictures'
 #   tour.mp4 tour-poster.png                           the captioned tour, about 90 s
 # hero.gif, in-app.png and in-app-recording.mp4 are screen captures of the real app and are not made here.
 #
