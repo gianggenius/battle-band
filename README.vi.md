@@ -36,24 +36,36 @@ Lần tới Claude mất một phút, bạn có một cuộc phiêu lưu nhỏ �
 
 ## Thử trong 30 giây
 
-```bash
-git clone https://github.com/gianggenius/battle-band.git
-cd battle-band && ./install.sh
-```
+Trong app Claude desktop, không cần terminal:
 
-Rồi mở **phiên mới** trong tab Code của app Claude desktop. Xong. Gỡ bất cứ lúc nào bằng `./install.sh --uninstall`.
+1. Bấm **+** cạnh ô nhập, chọn **Plugins**, rồi **Add plugin**.
+2. Trong trình duyệt plugin chọn **Add marketplace**, nhập `gianggenius/battle-band` rồi xác nhận.
+3. Mở **battle-band** và cài cho tài khoản của bạn.
+4. Mở **phiên mới** trong tab Code. Band hiện ngay phía trên ô nhập.
+
+App sẽ clone repo nên máy cần có Git. Nếu không thấy **Add marketplace**, hoặc app báo bị chặn, tổ chức của bạn đã tắt tính năng này: dùng cách từ bản tải về ở dưới.
 
 <details>
-<summary>Các cách cài khác (không dùng script, Windows, marketplace, phát triển)</summary>
+<summary>Các cách cài, cập nhật và gỡ khác (terminal, bản tải về, phát triển)</summary>
 
-- **Không dùng script:** chép thư mục `plugin` vào `~/.claude/skills/battle-band` (Windows: `%USERPROFILE%\.claude\skills\battle-band`, chưa thử), rồi mở phiên mới.
-- **Cập nhật:** `git pull && ./install.sh`, rồi mở phiên mới.
-- **Marketplace plugin (Claude Code CLI):** `claude plugin marketplace add gianggenius/battle-band`, rồi `claude plugin install battle-band@battle-band`.
-- **Thư mục bất kỳ, để phát triển:** đặt `CLAUDE_CODE_PLUGIN_DIRS` trỏ tới thư mục `plugin` trong khối `env` của `~/.claude/settings.json`. Mỗi lần chỉ dùng một cách, nếu không bạn sẽ có hai band.
+- **Terminal.** Terminal và app desktop dùng chung cấu hình plugin, nên cách này chạy cho cả hai:
+  ```bash
+  claude plugin marketplace add gianggenius/battle-band
+  claude plugin install battle-band@battle-band
+  ```
+- **Từ bản tải về, không dùng marketplace:**
+  ```bash
+  git clone https://github.com/gianggenius/battle-band.git
+  cd battle-band && ./install.sh
+  ```
+  `install.sh` chỉ chép `plugin/` vào `~/.claude/skills/battle-band`, nơi engine nạp nó thành `battle-band@skills-dir`. Script không sửa setting nào, kiểm tra bản chép khi tìm thấy engine Claude, và cảnh báo nếu setting của bạn đã nạp battle-band bằng cách khác. Không dùng script thì tự chép thư mục `plugin` vào đó (Windows: `%USERPROFILE%\.claude\skills\battle-band`, chưa thử).
+- **Thư mục bất kỳ, để phát triển:** đặt `CLAUDE_CODE_PLUGIN_DIRS` trỏ tới thư mục `plugin` trong khối `env` của `~/.claude/settings.json`.
+- **Cập nhật:** `claude plugin update battle-band@battle-band`, hoặc từ bản tải về `git pull && ./install.sh`. Rồi mở phiên mới.
+- **Gỡ:** app desktop **+** > **Plugins** > **Manage plugins**; terminal `claude plugin uninstall battle-band@battle-band`; bản tải về `./install.sh --uninstall`.
 
-`install.sh` chỉ chép `plugin/` vào `~/.claude/skills/battle-band`, nơi engine nạp nó thành `battle-band@skills-dir`. Script không sửa setting nào, kiểm tra bản chép khi tìm thấy engine Claude, và cảnh báo nếu setting của bạn đã nạp battle-band bằng cách khác.
+Mỗi lần chỉ dùng một cách, nếu không bạn sẽ có hai band.
 
-Cả ba cách đã được kiểm không giao diện bằng engine của chính app trong một thư mục home sạch (`hooks module battle-band@... loaded`, `tier user`). Chỉ cách `CLAUDE_CODE_PLUGIN_DIRS` đã chạy cả trong app desktop thật.
+Cách đã kiểm: nút **Add marketplace** của app desktop chạy đúng lệnh `claude plugin marketplace add` của engine. Lệnh đó, bước cài và bước nạp đã được kiểm từ GitHub bằng engine của app trong một thư mục home sạch (`hooks module battle-band@... loaded`, `tier user`); cách bản tải về và `CLAUDE_CODE_PLUGIN_DIRS` cũng kiểm như vậy. Chỉ `CLAUDE_CODE_PLUGIN_DIRS` đã chạy cả trong app desktop thật. Tên các menu ở trên lấy từ app và tài liệu của nó; chưa ai bấm thử từng bước, nếu tên khác thì bạn mở issue giúp.
 
 </details>
 

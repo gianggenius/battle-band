@@ -36,24 +36,36 @@ Next time Claude takes a minute, you get a tiny adventure to glance at.
 
 ## Try it in 30 seconds
 
-```bash
-git clone https://github.com/gianggenius/battle-band.git
-cd battle-band && ./install.sh
-```
+In the Claude desktop app, no terminal needed:
 
-Then open a **new session** in the Code tab of the Claude desktop app. That is all. Remove it any time with `./install.sh --uninstall`.
+1. Click **+** next to the prompt box, then **Plugins**, then **Add plugin**.
+2. In the plugin browser choose **Add marketplace**, enter `gianggenius/battle-band` and confirm.
+3. Open **battle-band** and install it for your user account.
+4. Start a **new session** in the Code tab. The band appears above the prompt.
+
+The app clones the repository, so Git must be installed. If **Add marketplace** is missing or says it is blocked, your organization has turned it off: use the checkout route below.
 
 <details>
-<summary>Other ways to install (no script, Windows, marketplace, development)</summary>
+<summary>Other ways to install, update and remove (terminal, checkout, development)</summary>
 
-- **No script:** copy the `plugin` folder to `~/.claude/skills/battle-band` (Windows: `%USERPROFILE%\.claude\skills\battle-band`, untested), then start a new session.
-- **Update:** `git pull && ./install.sh`, then start a new session.
-- **Plugin marketplace (Claude Code CLI):** `claude plugin marketplace add gianggenius/battle-band`, then `claude plugin install battle-band@battle-band`.
-- **Any folder, for development:** point `CLAUDE_CODE_PLUGIN_DIRS` at the `plugin` folder in the `env` block of `~/.claude/settings.json`. Use only one way at a time, or you get two bands.
+- **Terminal.** The terminal and the desktop app share the same plugin settings, so this works for both:
+  ```bash
+  claude plugin marketplace add gianggenius/battle-band
+  claude plugin install battle-band@battle-band
+  ```
+- **From a checkout, no marketplace:**
+  ```bash
+  git clone https://github.com/gianggenius/battle-band.git
+  cd battle-band && ./install.sh
+  ```
+  `install.sh` only copies `plugin/` to `~/.claude/skills/battle-band`, where the engine loads it as `battle-band@skills-dir`. It edits no setting, validates the copy when it can find a Claude engine, and warns if your settings already load battle-band another way. Without the script, copy the `plugin` folder there yourself (Windows: `%USERPROFILE%\.claude\skills\battle-band`, untested).
+- **Any folder, for development:** point `CLAUDE_CODE_PLUGIN_DIRS` at the `plugin` folder in the `env` block of `~/.claude/settings.json`.
+- **Update:** `claude plugin update battle-band@battle-band`, or from a checkout `git pull && ./install.sh`. Then start a new session.
+- **Remove:** desktop app **+** > **Plugins** > **Manage plugins**; terminal `claude plugin uninstall battle-band@battle-band`; checkout `./install.sh --uninstall`.
 
-`install.sh` only copies `plugin/` to `~/.claude/skills/battle-band`, where the engine loads it as `battle-band@skills-dir`. It edits no setting, validates the copy when it can find a Claude engine, and warns if your settings already load battle-band another way.
+Use only one route at a time, or you get two bands.
 
-All three routes were checked headless with the app's own engine in a clean home folder (`hooks module battle-band@... loaded`, `tier user`). Only the `CLAUDE_CODE_PLUGIN_DIRS` route has also run in the real desktop app.
+How these were checked: the desktop app's **Add marketplace** runs the engine's own `claude plugin marketplace add`. That command, the install and the load were checked from GitHub with the app's engine in a clean home folder (`hooks module battle-band@... loaded`, `tier user`); the checkout route and `CLAUDE_CODE_PLUGIN_DIRS` were checked the same way. Only `CLAUDE_CODE_PLUGIN_DIRS` has also run in the real desktop app. The menu names above come from the app and its docs; the click-through itself has not been tested yet, so please open an issue if a name differs.
 
 </details>
 
