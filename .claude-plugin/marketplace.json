@@ -10,7 +10,7 @@
       "name": "battle-band",
       "source": "./plugin",
       "description": "A pixel-art knight fights above the prompt while Claude works, and your usage limits are the roads he walks. In the Claude desktop app and in the Claude Code terminal.",
-      "version": "2.1.0",
+      "version": "2.1.1",
       "author": {
         "name": "GiGi",
         "url": "https://github.com/gianggenius"

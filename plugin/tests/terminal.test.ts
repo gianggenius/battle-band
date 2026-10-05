@@ -7,7 +7,7 @@ const T0 = Date.parse('2026-10-04T14:00:00Z')
 const band = (columns: number, over: object = {}) =>
   ({ hasSurvey: false, isWorking: false, maxRows: 20, bodyColumns: columns, scroll: { offset: 0, bodyRows: 20 }, view: {}, ...over }) as never
 
-type Node = { type?: string; props?: { columns?: number; rows?: number; cells?: string; key?: string }; children?: unknown[] }
+type Node = { type?: string; props?: { columns?: number; rows?: number; cells?: string; key?: string; marginLeft?: number }; children?: unknown[] }
 
 // every node of a drawing, children that are arrays flattened
 const walk = (t: unknown, out: Node[] = []): Node[] => {
@@ -126,6 +126,18 @@ describe('the terminal band', () => {
       expect([columns, r.props?.columns, r.props?.rows]).toEqual([columns, cols, rows])
       expect(r.props?.cells?.length).toBe(Math.ceil((cols * rows * 12) / 3) * 4)
     }
+    await t.ui.unmount()
+  })
+
+  test('a terminal wider than the picture has the whole band in its middle, the roads as wide as the picture', async ($, on) => {
+    const t = await setup($, on, 250)
+    const tree = await t.ui.drawn()
+    expect(walk(tree)[0]?.props?.marginLeft).toBe(30)
+    expect(raster(tree)?.props?.columns).toBe(190)
+    for (const line of roads(tree)) expect(textOf(line).length).toBe(190)
+    // a terminal the picture fills has no margin
+    await t.ui.redraw(band(150))
+    expect(walk(await t.ui.drawn())[0]?.props?.marginLeft).toBe(0)
     await t.ui.unmount()
   })
 

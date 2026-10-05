@@ -111,7 +111,7 @@ Khi Claude rảnh, hiệp sĩ ngủ bên đống lửa ở thế giới anh vừ
 
 <img src="docs/media/terminal.gif" width="880" alt="Hiệp sĩ chiến đấu phía trên ô nhập trong Claude Code ở terminal: hai đường usage bằng chữ, cảnh vẽ bằng các ô nửa khối">
 
-Hai đường usage thành hai dòng chữ, còn cảnh là một lưới ô, mỗi ô hai điểm ảnh (ký tự nửa khối `▀`), được vẽ lại tại chỗ khoảng 12 lần một giây khi anh chiến đấu. Cửa sổ từ 126 cột trở lên thấy đủ từng điểm ảnh (rộng hơn thì cắt quanh vùng hành động, tối đa 190 cột); hẹp hơn thì thu nhỏ, và chỗ trống dưới 8 dòng thì bỏ hai đường usage. Cảnh trại cũng vậy, 3 khung hình một giây.
+Hai đường usage thành hai dòng chữ, còn cảnh là một lưới ô, mỗi ô hai điểm ảnh (ký tự nửa khối `▀`), được vẽ lại tại chỗ khoảng 12 lần một giây khi anh chiến đấu. Từ 124 cột trở lên, ảnh được vẽ đúng từng điểm ảnh: cửa sổ hẹp hơn ảnh (190 cột) thì cắt quanh vùng hành động, rộng hơn thì đặt cả band ở giữa. Hẹp hơn 124 cột thì thu nhỏ ảnh, và chỗ trống dưới 8 dòng thì bỏ hai đường usage. Cảnh trại cũng vậy, 3 khung hình một giây.
 
 <sub>Dựng từ chính các ô mà mod gửi đi, theo cách terminal vẽ (với 4 bit màu mỗi kênh mà Claude Code dành cho loại ảnh này); số usage là số mẫu.</sub>
 
@@ -192,7 +192,7 @@ plugin/               mod, thư mục duy nhất được cài
   hooks/                hooks.json và register.tsx (các hook và việc vẽ)
   hooks/adv/            nghệ thuật (sprite, các thế giới), dàn cảnh, dải usage, trại
   hooks/term/           band cho terminal: bộ vẽ ảnh SVG, các ô, hai đường usage bằng chữ
-  tests/                23 bài kiểm tra, chạy bằng `claude plugin test`
+  tests/                24 bài kiểm tra, chạy bằng `claude plugin test`
 tools/                script dựng, kiểm tra và deploy
 tools/host/           dựng lại cách app vẽ một Svg (bộ làm sạch và khung cách ly) trong Chrome không giao diện
 tools/term/           bộ vẽ cho terminal chạy trên một ảnh, để so với Chrome
@@ -206,7 +206,7 @@ install.sh            trình cài đặt
 
 ```bash
 claude plugin validate plugin --strict     # manifest, hook, và các lời gọi engine của mã
-claude plugin test plugin                  # 23 bài kiểm tra (đồng hồ giả điều khiển chúng)
+claude plugin test plugin                  # 24 bài kiểm tra (đồng hồ giả điều khiển chúng)
 bun tools/build.ts out all                 # mỗi thế giới một SVG, vào ./out
 (cd tools/host && npm install)             # một lần: puppeteer-core và DOMPurify
 node tools/host/sanitize-check.js out/*.svg   # bộ làm sạch của app sẽ bỏ gì (không được bỏ gì cả)

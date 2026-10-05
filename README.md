@@ -111,7 +111,7 @@ When Claude is idle, the knight sleeps by the fire in whichever world he last re
 
 <img src="docs/media/terminal.gif" width="880" alt="The knight fights above the prompt in Claude Code in a terminal: the two usage roads as text, the scene drawn in cells of half blocks">
 
-The roads become two lines of text, and the scene a grid of cells, two pixels to a cell (the half block `▀`), repainted in place about 12 times a second while he fights. A window of 126 columns or more shows every pixel (a wider picture is cropped around the action, up to 190 columns); a narrower one shrinks the picture, and a room of fewer than 8 rows drops the roads. The camp is the same, at 3 frames a second.
+The roads become two lines of text, and the scene a grid of cells, two pixels to a cell (the half block `▀`), repainted in place about 12 times a second while he fights. From 124 columns the picture is drawn pixel for pixel: a window narrower than the picture (190 columns) crops it around the action, a wider one puts the whole band in the middle. A narrower window shrinks the picture, and a room of fewer than 8 rows drops the roads. The camp is the same, at 3 frames a second.
 
 <sub>Rendered from the cells the mod sends, the way a terminal paints them (with the 4 bits of color a channel Claude Code gives such a picture); the usage numbers are a sample.</sub>
 
@@ -192,7 +192,7 @@ plugin/               the mod, the only folder that gets installed
   hooks/                hooks.json and register.tsx (the hooks and the draw)
   hooks/adv/            the art (sprites, worlds), the choreography, the usage strip, the camp
   hooks/term/           the terminal band: a rasterizer for the pictures, the cells, the roads as text
-  tests/                23 tests, run by `claude plugin test`
+  tests/                24 tests, run by `claude plugin test`
 tools/                build, check and deploy scripts
 tools/host/           replays the app's drawing of an Svg (its scrub and sandboxed frame) in headless Chrome
 tools/term/           the terminal rasterizer on a picture, to compare with Chrome
@@ -206,7 +206,7 @@ install.sh            the installer
 
 ```bash
 claude plugin validate plugin --strict     # manifest, hooks, and the engine calls the code makes
-claude plugin test plugin                  # the 23 tests (a fake clock drives them)
+claude plugin test plugin                  # the 24 tests (a fake clock drives them)
 bun tools/build.ts out all                 # one SVG per world, into ./out
 (cd tools/host && npm install)             # once: puppeteer-core and DOMPurify
 node tools/host/sanitize-check.js out/*.svg   # what the app's scrub would drop (it must drop nothing)

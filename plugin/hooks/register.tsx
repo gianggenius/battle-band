@@ -227,9 +227,10 @@ export const register: Register = on => {
         const fit = fitScene(columns, Math.max(1, Math.min(SCENE_ROWS, room - (roads ? ROAD_ROWS : 0))))
         termStart($, e.requestId, fit)
         const { Box, Text, Raster } = $.ui.resolve(e)
-        const lines = roads ? stripLines(latest, now, columns) : []
+        // the roads are as wide as the picture, and a terminal wider than the picture has the whole band in its middle
+        const lines = roads ? stripLines(latest, now, fit.columns) : []
         return (
-          <Box flexDirection="column">
+          <Box flexDirection="column" marginLeft={Math.floor((columns - fit.columns) / 2)}>
             {lines.map(spans => (
               <Text wrap="truncate">
                 {spans.map(span => (
