@@ -3,7 +3,7 @@
 <p align="center"><b>The first idle-RPG in your Claude Code.</b></p>
 
 <p align="center">
-  A pixel-art knight fights above the prompt of the Claude desktop app while Claude works.<br>
+  A pixel-art knight fights above the prompt while Claude works, in the Claude desktop app and in the terminal.<br>
   When Claude rests, he sleeps by a campfire. Your usage limits are the roads he walks.
 </p>
 
@@ -26,6 +26,7 @@ Next time Claude takes a minute, you get a tiny adventure to glance at.
 - **It plays itself.** Four worlds, twelve monsters, four bosses. Dash strikes, damage numbers, and boss attacks that show a warning mark before they land.
 - **It never ends.** After the volcano the knight walks back into the dungeon and every monster returns in new colors, one round tougher.
 - **It rests when Claude does.** A campfire, drifting embers and one very sleepy knight.
+- **Desktop and terminal.** The same adventure above the prompt of the Claude desktop app and of Claude Code in your terminal.
 - **Your usage limits are the roads.** Two little roads draw your 5-hour (**5H**) and weekly (**1W**) limits, green then amber then red. Reach the end of a road and you are out of tokens.
 - **Free to run.** Nothing to click, nothing to configure, and it never talks to the model, so it spends no tokens.
 
@@ -36,23 +37,27 @@ Next time Claude takes a minute, you get a tiny adventure to glance at.
 
 ## Try it in 30 seconds
 
-In the Claude desktop app, no terminal needed:
+**In the Claude desktop app**, no terminal needed:
 
 1. Click **+** next to the prompt box, then **Plugins**, then **Add plugin**.
 2. In the plugin browser choose **Add marketplace**, enter `gianggenius/battle-band` and confirm.
 3. Open **battle-band** and install it for your user account.
 4. Start a **new session** in the Code tab. The band appears above the prompt.
 
-The app clones the repository, so Git must be installed. If **Add marketplace** is missing or says it is blocked, your organization has turned it off: use the checkout route below.
+The app clones the repository, so Git must be installed. If **Add marketplace** is missing or says it is blocked, your organization has turned it off: use the terminal or the checkout route below.
+
+**In Claude Code in a terminal:**
+
+```bash
+claude plugin marketplace add gianggenius/battle-band
+claude plugin install battle-band@battle-band
+```
+
+Then start a new session. The terminal and the desktop app share the same plugin settings, so one install shows the band in both.
 
 <details>
-<summary>Other ways to install, update and remove (terminal, checkout, development)</summary>
+<summary>Other ways to install, update and remove (checkout, development)</summary>
 
-- **Terminal.** The terminal and the desktop app share the same plugin settings, so this works for both:
-  ```bash
-  claude plugin marketplace add gianggenius/battle-band
-  claude plugin install battle-band@battle-band
-  ```
 - **From a checkout, no marketplace:**
   ```bash
   git clone https://github.com/gianggenius/battle-band.git
@@ -65,7 +70,7 @@ The app clones the repository, so Git must be installed. If **Add marketplace** 
 
 Use only one route at a time, or you get two bands.
 
-How these were checked: the desktop app's **Add marketplace** runs the engine's own `claude plugin marketplace add`. That command, the install and the load were checked from GitHub with the app's engine in a clean home folder (`hooks module battle-band@... loaded`, `tier user`); the checkout route and `CLAUDE_CODE_PLUGIN_DIRS` were checked the same way. Only `CLAUDE_CODE_PLUGIN_DIRS` has also run in the real desktop app. The menu names above come from the app and its docs; the click-through itself has not been tested yet, so please open an issue if a name differs.
+How these were checked: the desktop app's **Add marketplace** runs the engine's own `claude plugin marketplace add`. That command, the install and the load were checked from GitHub with the app's engine in a clean home folder (`hooks module battle-band@... loaded`, `tier user`); the checkout route and `CLAUDE_CODE_PLUGIN_DIRS` were checked the same way. Only `CLAUDE_CODE_PLUGIN_DIRS` has also run in the real desktop app, and the terminal band was run in the real Claude Code 2.1.289 (loaded with `--plugin-dir`). The menu names above come from the app and its docs; the click-through itself has not been tested yet, so please open an issue if a name differs.
 
 </details>
 
@@ -102,6 +107,14 @@ A little knight walks the 5H road to the tower and the 1W road to the castle as 
 
 When Claude is idle, the knight sleeps by the fire in whichever world he last reached.
 
+### In the terminal
+
+<img src="docs/media/terminal.gif" width="880" alt="The knight fights above the prompt in Claude Code in a terminal: the two usage roads as text, the scene drawn in cells of half blocks">
+
+The roads become two lines of text, and the scene a grid of cells, two pixels to a cell (the half block `▀`), repainted in place about 12 times a second while he fights. A window of 126 columns or more shows every pixel (a wider picture is cropped around the action, up to 190 columns); a narrower one shrinks the picture, and a room of fewer than 8 rows drops the roads. The camp is the same, at 3 frames a second.
+
+<sub>Rendered from the cells the mod sends, the way a terminal paints them (with the 4 bits of color a channel Claude Code gives such a picture); the usage numbers are a sample.</sub>
+
 <details>
 <summary>More pictures and the full tour</summary>
 
@@ -132,31 +145,39 @@ All six states of the usage strip:
 
 <img src="docs/media/usage-states.png" width="880" alt="The usage strip in six states: no data, just reset, calm, getting close, nearly out, out of tokens">
 
+The terminal band, a fight and the camp:
+
+<img src="docs/media/terminal.png" width="880" alt="The terminal band during a fight with the Yeti King: two lines of roads, the scene in half-block cells, the prompt below">
+
+<img src="docs/media/terminal-camp.png" width="880" alt="The terminal band at the dungeon camp">
+
 </details>
 
 ## Good to know
 
-- **Desktop app only.** Nothing is drawn in the terminal or in VS Code. Tested on macOS 26.6 with Claude desktop 2.19675.0 (engine 2.1.286); Windows should work but is untested.
+- **Desktop app and terminal.** Nothing is drawn in VS Code. Tested on macOS 26.6 with the Claude desktop app 2.19675.0 (engine 2.1.286) and Claude Code 2.1.289 in the terminal; Windows should work but is untested.
 - **The knight only moves while Claude works.** Each new session starts in the dungeon, and the next stretch of work continues where the last one stopped.
 - **Every 48 seconds the band dims for about a second**, while the knight walks into the next world. In a 100 s recording of the real app those were the only dark moments, apart from one short restart as the recording began.
 - **It is an idle game in the watch-it-go sense:** no stats, loot or levels, just the adventure.
 - **The hover text on the usage roads is in Vietnamese** for now (`plugin/hooks/adv/usage.ts` has the strings if you want to translate them).
 - **The roads stay grey** until the engine reports your limits (after the first answer of a session), or for good if your account has no 5-hour or weekly window.
-- **Cost:** in a software-rendered test it used about 8 to 11% of one CPU core. Its cost inside the app was not measured.
+- **The terminal shows fewer colors than the desktop.** Claude Code paints this kind of picture at 4 bits a channel (4096 colors), and inside tmux it keeps only 256 colors unless you set `CLAUDE_CODE_TMUX_TRUECOLOR=1`.
+- **Cost.** Desktop: in a software-rendered test about 8 to 11% of one CPU core; its cost inside the app was not measured. Terminal, measured in Claude Code 2.1.289: about 1% of a core with no mod, 3.5% with the knight at his camp and 9% while he fights.
 - The engine's plugin hooks are new, so a future update may change them: run `claude plugin validate` if the band stops showing.
 
 ## How it works
 
-- The mod answers the app's `ui.render` hook (the band above the prompt) with one animated SVG: pure SMIL, no scripts. Three tiny hooks, `turn.start`, `turn.complete` and `session.measure`, tell it when Claude works and what your usage is.
+- The mod answers the `ui.render` hook (the band above the prompt) of the desktop app with one animated SVG: pure SMIL, no scripts. Three tiny hooks, `turn.start`, `turn.complete` and `session.measure`, tell it when Claude works and what your usage is.
+- In the terminal the band is a `Raster` of cells that a timer repaints in place, and the roads are text. A small rasterizer (`plugin/hooks/term/`) draws the same SVG pictures into it, checked pixel by pixel against Chrome, so both show the same adventure.
 - The app rebuilds the picture whenever the mod redraws it, so the picture is a function of the clock: each redraw says where in the 48 s lap the knight is, and the animation carries on from there.
 - Design notes, including the app's drawing path and the limits found along the way (in Vietnamese): [docs/design.md](docs/design.md).
 
 ## Safe by design
 
 - It reads when a turn starts and ends, and your usage numbers (percent used and reset time). It never reads your prompts or the answers.
-- No network, no files, no commands, no tools, no MCP servers. `claude plugin validate plugin` lists the few engine calls the code makes: `$.clock.after`, `$.clock.now`, `$.session.usage`, `$.ui.invalidate`, `$.ui.resolve`.
+- No network, no files, no commands, no tools, no MCP servers. `claude plugin validate plugin` lists the few engine calls the code makes: `$.clock.after`, `$.clock.every`, `$.clock.now`, `$.session.usage`, `$.ui.blit`, `$.ui.invalidate`, `$.ui.resolve`.
 - The picture is cleaned by the app and shown in a sandboxed frame without scripts or network access.
-- About 3,000 lines of TypeScript and no dependencies: small enough to read before you install. The whole mod is the `plugin` folder.
+- About 3,600 lines of TypeScript and no dependencies: small enough to read before you install. The whole mod is the `plugin` folder.
 
 ## Hack on it
 
@@ -170,10 +191,12 @@ plugin/               the mod, the only folder that gets installed
   .claude-plugin/       plugin.json
   hooks/                hooks.json and register.tsx (the hooks and the draw)
   hooks/adv/            the art (sprites, worlds), the choreography, the usage strip, the camp
-  tests/                12 tests, run by `claude plugin test`
+  hooks/term/           the terminal band: a rasterizer for the pictures, the cells, the roads as text
+  tests/                23 tests, run by `claude plugin test`
 tools/                build, check and deploy scripts
 tools/host/           replays the app's drawing of an Svg (its scrub and sandboxed frame) in headless Chrome
-tools/media/          rebuilds the pictures and the tour video in docs/media
+tools/term/           the terminal rasterizer on a picture, to compare with Chrome
+tools/media/          rebuilds the pictures, the terminal pictures and the tour video in docs/media
 docs/design.md        design notes (Vietnamese)
 install.sh            the installer
 .claude-plugin/       marketplace.json
@@ -183,10 +206,11 @@ install.sh            the installer
 
 ```bash
 claude plugin validate plugin --strict     # manifest, hooks, and the engine calls the code makes
-claude plugin test plugin                  # the 12 tests (a fake clock drives them)
+claude plugin test plugin                  # the 23 tests (a fake clock drives them)
 bun tools/build.ts out all                 # one SVG per world, into ./out
 (cd tools/host && npm install)             # once: puppeteer-core and DOMPurify
 node tools/host/sanitize-check.js out/*.svg   # what the app's scrub would drop (it must drop nothing)
+node tools/host/term-compare.js out/dungeon.svg out/cmp 3 11 35   # the terminal rasterizer against Chrome, pixel by pixel
 ```
 
 To work on the mod, point `CLAUDE_CODE_PLUGIN_DIRS` at your working copy's `plugin` folder (instead of running `install.sh`), start a session, and run `/reload-plugins` after each change. `tools/deploy.sh` is the author's way to ship to such a folder: it validates and tests a clean copy, builds every picture through the scrub, backs up the old copy and copies the new one.

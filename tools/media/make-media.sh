@@ -3,6 +3,7 @@
 #   worlds.png elite-pair.png usage.png camp.png        the README front page
 #   biome-*.png camps.png usage-states.png elite.png   the same, in full, for the README's 'More pictures'
 #   tour.mp4 tour-poster.png                           the captioned tour, about 90 s
+#   terminal.png terminal-camp.png terminal.gif        the band as a terminal paints it
 # hero.gif, in-app.png and in-app-recording.mp4 are screen captures of the real app and are not made here.
 #
 # Needs: bun, node (run `npm install` in tools/host once), Google Chrome (or CHROME=<binary>), ffmpeg, ImageMagick (`magick`).
@@ -19,6 +20,13 @@ bun "$here/build-media.ts" "$work/svg" >/dev/null
 node "$here/stills.js" "$work/svg" "$work/stills"
 python3 "$here/compose.py" "$work/stills" "$out"
 node "$here/tour.js" "$work/svg" "$work/tour" "$out/tour.mp4"
+
+# the terminal band: the cells the plugin makes, drawn as a terminal paints them
+bun "$here/term-frames.ts" "$work/term"
+node "$here/term-render.js" "$work/term/frames.json" "$work/term-png"
+cp "$work/term-png/still-fight.png" "$out/terminal.png"
+cp "$work/term-png/still-camp.png" "$out/terminal-camp.png"
+ffmpeg -v error -y -framerate 12 -i "$work/term-png/clip/%05d.png" -vf "split[a][b];[a]palettegen=max_colors=160:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" -loop 0 "$out/terminal.gif"
 
 # the poster: a frame from inside a clip, with a play button on it
 ffmpeg -v error -y -ss 19 -i "$out/tour.mp4" -frames:v 1 "$work/poster.png"

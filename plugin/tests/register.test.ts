@@ -26,8 +26,9 @@ const walk = (t: unknown, out: Node[] = []): Node[] => {
   return out
 }
 
-type Test$ = Parameters<Parameters<typeof test>[1]>[0]
-type On = Parameters<Parameters<typeof test>[1]>[1]
+type Body = Extract<Parameters<typeof test>[1], (...args: never[]) => unknown>
+type Test$ = Parameters<Body>[0]
+type On = Parameters<Body>[1]
 
 // the plugin on the desktop, with a clock the test moves and the engine's own answers beneath it
 const setup = async ($: Test$, on: On, known: { kind: string; percentUsed: number; resetsAt?: string }[] = []) => {
@@ -70,7 +71,7 @@ describe('the band', () => {
     await t.ui.unmount()
   })
 
-  test('draws nothing on the terminal', async ($, on) => {
+  test('sends no Svg to a terminal, which has none (terminal.test.ts has what it draws instead)', async ($, on) => {
     on('ui.render', ($, e) => $.ui.resolve(e).Text({ children: 'engine' }))
     const ui = await $.ui.mount({ plugin: 'battle-band', surface: 'terminal', component: 'AbovePrompt', props: BAND, viewport: { columns: 120, rows: 40 } })
     expect(walk(await ui.drawn()).some(n => n.type === 'Svg')).toBe(false)

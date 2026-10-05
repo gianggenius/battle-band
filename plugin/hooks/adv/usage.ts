@@ -15,7 +15,7 @@ const LEN = X1 - X0
 const ROAD_ROWS = 5 // rows of one road
 const ROW_PITCH = ROAD_ROWS + 1 // the second road starts one row below the first one's last
 
-const ROADS = [
+export const ROADS = [
   { kind: 'five_hour', name: 'Giới hạn 5 giờ', label: '5H', windowMs: 5 * 3600_000, castle: false },
   { kind: 'seven_day', name: 'Giới hạn tuần', label: '1W', windowMs: 7 * 24 * 3600_000, castle: true },
 ] as const
@@ -60,13 +60,13 @@ const word = (text: string, x: number, y: number): string => {
 const PAL = { P: '#e11d48', H: '#cbd5e1', V: '#0f172a', L: '#475569' }
 const KNIGHT_A = sprite(['.P.', 'HVH', '...', 'L.L'], PAL)
 const KNIGHT_B = sprite(['.P.', 'HVH', '...', '.L.'], PAL)
-const COLOR = ['#4ade80', '#fbbf24', '#f87171', '#6b7280'] // green, amber, red, no data
+export const COLOR = ['#4ade80', '#fbbf24', '#f87171', '#6b7280'] // green, amber, red, no data
 const DOTS = '#47446a'
 const STONE = '#8b8aa8'
 const STONE_TOP = '#b4b3d0'
 const DARK = '#0d0b16'
 
-const level = (pct: number | undefined) => (pct === undefined ? 3 : pct < 60 ? 0 : pct < 85 ? 1 : 2)
+export const level = (pct: number | undefined) => (pct === undefined ? 3 : pct < 60 ? 0 : pct < 85 ? 1 : 2)
 
 // "2 giờ 10 phút", "5 ngày 3 giờ", "dưới 1 phút"
 export const span = (ms: number): string => {
@@ -86,10 +86,10 @@ const px = (x: number, y: number, fill: string, inner = '') => rect(x, y, 1, 1, 
 const blink = (values: string[], dur: number) =>
   `<animate attributeName="fill" calcMode="discrete" dur="${dur}s" repeatCount="indefinite" keyTimes="${values.map((_, i) => String(Math.round((i / values.length) * 1000) / 1000).replace(/^0\./, '.')).join(';')}" values="${values.join(';')}"/>`
 
-type Road = (typeof ROADS)[number]
-type Reading = { pct: number | undefined; elapsed: number | undefined; left: number | undefined; reset: boolean }
+export type Road = (typeof ROADS)[number]
+export type Reading = { pct: number | undefined; elapsed: number | undefined; left: number | undefined; reset: boolean }
 
-const read = (limits: Limit[], road: Road, now: number): Reading => {
+export const read = (limits: Limit[], road: Road, now: number): Reading => {
   const l = limits.find(x => x.kind === road.kind)
   if (!l) return { pct: undefined, elapsed: undefined, left: undefined, reset: false }
   const ends = l.resetsAt ? Date.parse(l.resetsAt) : NaN

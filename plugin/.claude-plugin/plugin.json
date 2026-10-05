@@ -1,7 +1,7 @@
 {
   "name": "battle-band",
-  "version": "2.0.0",
-  "description": "The first idle-RPG in your Claude Code: a pixel-art knight fights in the band above the prompt while Claude works (dungeon, plateau, frozen lands, volcano, then endless elite laps), sleeps by a campfire when Claude is idle, and walks two roads that draw your 5-hour and weekly usage limits. Desktop app only; nothing else is added.",
+  "version": "2.1.0",
+  "description": "The first idle-RPG in your Claude Code: a pixel-art knight fights in the band above the prompt while Claude works (dungeon, plateau, frozen lands, volcano, then endless elite laps), sleeps by a campfire when Claude is idle, and walks two roads that draw your 5-hour and weekly usage limits. In the Claude desktop app and in the Claude Code terminal; nothing else is added.",
   "author": {
     "name": "GiGi",
     "url": "https://github.com/gianggenius"
@@ -13,6 +13,7 @@
     "idle-rpg",
     "pixel-art",
     "desktop",
+    "terminal",
     "usage",
     "adventure"
   ],
